@@ -7,7 +7,7 @@ export const useFetchUsers = () => {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchUsers = async (number: number = 10) => {
+  const fetchUsers = async (number: number = 1244) => {
     setLoading(true)
     setTimeout(() => {
       setUsers([...users, ...generateFakeUsers(number)])

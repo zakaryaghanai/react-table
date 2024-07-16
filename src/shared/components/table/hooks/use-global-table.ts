@@ -108,24 +108,52 @@ export const useGlobalTable = <T extends { id: string }>(props: IGlobalTableConf
 
 	const handleSearch = useDebouncedFunction(setSearch);
 
-	const filterRows = (rows: T[], search: string) => {
-		if (!searchCells?.length || !search.length) {
-			return rows;
-		}
+  const filterRows = (rows: T[], search: string) => {
+    if (!searchCells?.length || !search.length) {
+      return rows;
+    }
 
-		const searchResult: T[] = []
-		const existingIds: string[] = []
-		for (const row of rows) {
-			for (const [key, value] of Object.entries(row as Object)) {
-				if (searchCells.includes(key as any) && value.includes(search) && !existingIds.includes(row.id)) {
-					searchResult.push(row)
-					existingIds.push(row.id)
-				}
-			}
-		}
+    const build = (value: any, str: string) => {
+      let newValue = null
+      const split = str.split('.')
+      const key = split.shift()
 
-		return searchResult;
-	}
+      newValue = value[key as keyof typeof value]
+
+      if (split.length) {
+        return build(newValue, split.join('.'))
+      }
+
+      return String(newValue).toLowerCase()
+    }
+
+
+    const searchResult: T[] = []
+    const existingIds: string[] = []
+    for (const row of rows) {
+      for (const [key, value] of Object.entries(row as Object)) {
+
+        const dynamicSearchCell = searchCells.filter((searchCell) => String(searchCell).includes('.'))
+        const defaultSearchCell = searchCells.filter((searchCell) => !String(searchCell).includes('.'))
+
+        if (typeof value == 'object') {
+          for (const d of dynamicSearchCell) {
+            const objectValue = build(value, String(d).replace(`${key}.`, ''))
+
+            if (objectValue.includes(search) && !existingIds.includes(row.id)) {
+              searchResult.push(row)
+              existingIds.push(row.id)
+            }
+          }
+        } else if (defaultSearchCell.includes(key as any) && String(value).toLocaleLowerCase().includes(search) && !existingIds.includes(row.id)) {
+          searchResult.push(row)
+          existingIds.push(row.id)
+        }
+      }
+    }
+
+    return searchResult;
+  }
 
 	const handleRequestSort = (
 		_: React.MouseEvent<unknown>,

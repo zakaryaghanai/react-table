@@ -97,7 +97,7 @@ export default function EnhancedTableHead<RowDataType>(
 
         {headCells.map((headCell) => {
           const cellContent = (
-            <Box component={"span"} sx={{ minWidth: "max-content" }}>
+            <Box component={"span"} sx={{ minWidth: headCell.width ?? "max-content" }}>
               {getLabel(headCell)}
             </Box>
           );

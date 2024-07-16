@@ -28,25 +28,27 @@ export const DemoTable = () => {
       {
         getter: "username",
         label: "Username",
+        width: "130px",
       },
       {
         getter: "email",
         label: "Email",
-        width: "260px",
+        width: "200px",
       },
       {
         getter: "createdAt",
         label: "Created at",
-        width: "140px",
+        width: "110px",
       },
       {
         getter: "updatedAt",
         label: "Updated at",
-        width: "140px",
+        width: "110px",
       },
       {
         getter: "role.name" as any,
         label: "Role",
+        width: "70px",
       },
       {
         getter: "active",
@@ -63,7 +65,11 @@ export const DemoTable = () => {
     ];
   }, []);
 
-  const searchCells: SearchCellsType<Partial<User>> = ["username", "email"];
+  const searchCells: SearchCellsType<Partial<User>> = [
+    "username",
+    "email",
+    "role.name" as keyof User,
+  ];
 
   const tableData = useGlobalTable<User>({
     id: "users",

@@ -30,7 +30,7 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       justifyContent={"space-between"}
       alignItems={{ xs: "flex-end", sm: "center" }}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-        onSearch(e.target.value.trim())
+        onSearch(e.target.value.trim().toLowerCase())
       }
       sx={{ padding: "15px" }}
     >
