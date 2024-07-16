@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
+# DemoTable Component 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
 
-Currently, two official plugins are available:
+1. pnpm install
+2. pnpm dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Overview
 
-- Configure the top-level `parserOptions` property like this:
+This React component, `DemoTable`, is designed to render a dynamic user table with various features such as:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+* **Data Display:** Username, email, created/updated timestamps, role, and user status.
+* **Search:** Functionality to filter users by username, email, or role.
+* **Permissions:** Conditionally displays "Edit" actions based on user permissions.
+* **Customizable:** Leverages the `AppTable` and `GlobalTableHeadCell` components for layout and head cell configuration.
+* **Status Chip:** Visually indicates user status (Enabled/Disabled).
+* **Tooltips:** Provides helpful information on hover over interactive elements.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Dependencies
+
+* **@mui/material:** For UI components.
+* **react:** Core React library for building components.
+* **Custom Hooks:**
+    * `useFetchUsers`: Fetches user data.
+    * `useDate`: Formats dates.
+    * `useGlobalTable`: Manages table state and functionality.
+* **Shared Components:**
+    * `PermissionWrapper`: Handles conditional rendering based on permissions.
+    * `StatusChip`: Displays status with a color-coded chip.
+    * `AppTable`: Base table component.
+  
+## Demo Table Component
+  \<DemoTable />
+
+
+## Configuration
+
+* **tableHeadCells:** Array to define the table columns (label, getter, width, etc.).
+* **searchCells:** Array of user properties that are searchable.
+* **allowedToUpdate, allowedToDelete:** State variables controlling permissions for editing and deleting.
